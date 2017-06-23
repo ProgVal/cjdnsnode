@@ -1,5 +1,6 @@
 /*@flow*/
 module.exports = {
+    databaseType: 'postgres',
     postgres: {
         user: 'cjdnsnode_user',
         database: 'cjdnsnode',

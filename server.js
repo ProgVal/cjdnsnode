@@ -530,7 +530,9 @@ const keepTableClean = (ctx) => {
 const loadDb = (ctx, cb) => {
     console.log('gc');
     nThen((waitFor) => {
-        ctx.db._db.on('notification', (n) => { console.log(n); });
+        if (typeof ctx.db._db !== 'undefined') {
+            ctx.db._db.on('notification', (n) => { console.log(n); });
+        }
         const minTs = now() - GLOBAL_TIMEOUT_MS;
         ctx.db.garbageCollect(minTs, waitFor(() => {
             console.log("Garbage collection complete");
