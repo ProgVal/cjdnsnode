@@ -375,7 +375,7 @@ const onSubnodeMessage = (ctx, msg, cjdnslink) => {
         delete msg.contentBenc.sq;
         delete msg.contentBenc.src;
         delete msg.contentBenc.tar;
-        cjdnslink.send(msg);
+        cjdnslink.send(msg, msg.routeHeader.ip);
     } else if (msg.contentBenc.sq.toString('utf8') === 'ann') {
         const reply = handleAnnounce(ctx, msg.contentBenc.ann, true, false);
         if (!ctx.mut.selfNode) { throw new Error(); }
@@ -388,7 +388,7 @@ const onSubnodeMessage = (ctx, msg, cjdnslink) => {
         };
         msg.routeHeader.switchHeader.labelShift = 0;
         console.log("reply: " + reply.stateHash.toString('hex'));
-        cjdnslink.send(msg);
+        cjdnslink.send(msg, msg.routeHeader.ip);
     } else if (msg.contentBenc.sq.toString('utf8') === 'pn') {
         msg.contentBenc.recvTime = now();
         msg.contentBenc.stateHash = new Buffer(new Array(64).fill(0));
@@ -402,7 +402,7 @@ const onSubnodeMessage = (ctx, msg, cjdnslink) => {
         delete msg.contentBenc.sq;
         delete msg.contentBenc.src;
         delete msg.contentBenc.tar;
-        cjdnslink.send(msg);
+        cjdnslink.send(msg, msg.routeHeader.ip);
     } else {
         console.log(msg.contentBenc);
     }
